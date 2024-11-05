@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Usuarios - Gimnasio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+/* Configuración global */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212; /* Fondo negro brillante */
+    color: #f0f0f0; /* Texto en color claro para el contraste */
+    line-height: 1.6;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #1e1e1e; /* Fondo más claro para el contenedor */
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Títulos */
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    color: hsl(171, 81%, 49%); /* Color azul cielo del titulo xd */
+    margin-bottom: 1.5em;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: hsl(0, 0%, 97%); /* Color azul pa agregar xd */
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    border-bottom: 2px solid #ffdd57;
+    padding-bottom: 0.2em;
+}
+
+/* Botón de Salida */
+.logout-btn {
+    float: right;
+    padding: 10px 20px;
+    background-color: #dc3545; /* Color rojo */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.logout-btn:hover {
+    background-color: #c82333; /* Rojo oscuro en hover */
+}
+
+/* Estilos del formulario */
+#add-member-form {
+    background-color: #2a2a2a; /* Fondo gris oscuro */
+    padding: 20px;
+    border: 1px solid #444;
+    border-radius: 10px;
+    margin-bottom: 1.5em;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.form-group {
+    margin-bottom: 1.2em;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+    color: #ffdd57; /* Color dorado */
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="file"] {
+    width: 100%;
+    padding: 0.75em;
+    border: 1px solid #444;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #fff; /* Texto blanco */
+    background-color: #3a3a3a; /* Fondo gris oscuro para inputs */
+    transition: border-color 0.3s ease;
+    box-shadow: inset 0px 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="file"]:focus {
+    border-color: #ffdd57; /* Borde dorado en foco */
+}
+
+button[type="submit"],
+.btn-success {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: hsl(189, 100%, 3%); /* Verde para botón de registro */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Verde oscuro en hover */
+}
+
+/* Tabla de usuarios */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.table thead th {
+    background-color: #007bff; /* Azul para encabezados */
+    color: #fff;
+    padding: 12px;
+    font-size: 1rem;
+    text-align: left;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #444;
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #f0f0f0; /* Texto claro */
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #2a2a2a; /* Fondo gris oscuro para filas impares */
+}
+
+/* Fotos de perfil */
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #444; /* Borde gris oscuro */
+}
+
+/* Botón de eliminar */
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545; /* Rojo */
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Rojo oscuro en hover */
+}
+
+        </style>
+</head>
+<body>
+    <div class="container">
+        <button class="btn btn-danger logout-btn" onclick="logout()">Salir⬅️</button>
+        <h1 class="text-center">Gimnasio🏋️‍♂️</h1>
+
+        <!-- Formulario para agregar nuevos miembros -->
+        <h2>AGREGAR USUARIO</h2>
+   
+        <form id="add-member-form" class="mb-4">
+            <div class="form-group">
+                <label for="name">Nombre Completo:</label>
+                <input type="text" id="name" class="form-control" maxlength="30" required onkeypress="return isLetter(event)">
+            </div>
+            <div class="form-group">
+                <label for="age">Edad:</label>
+                <input type="text" id="age" class="form-control" maxlength="2" required onkeypress="return isNumber(event)" oninput="validateAge(this)">
+            </div>
+            <div class="form-group">
+                <label for="email">Correo:</label>
+                <input type="email" id="email" class="form-control" maxlength="30" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Número de Teléfono:</label>
+                <input type="text" id="phone" class="form-control" maxlength="10" required onkeypress="return isNumber(event)">
+            </div>
+            <div class="form-group">
+                <label for="payment">Monto a Pagar:</label>
+                <input type="text" id="payment" class="form-control" maxlength="3" required onkeypress="return isNumber(event)" oninput="validatePayment(this)">
+            </div>
+            <div class="form-group">
+                <label for="profile-picture">Foto de Perfil:</label>
+                <input type="file" id="profile-picture" accept="image/*" required>
+            </div>
+            <button type="submit" class="btn btn-success">Registrar</button>
+        </form>
+        
+        <!-- Tabla para mostrar la lista de usuarios -->
+        <h2>Usuarios Registrados</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Correo</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de Entrada</th>
+                    <th>Días en el Gimnasio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="user-list">
+                <!-- Aquí se insertarán los usuarios -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+
+// Función para permitir solo letras en el nombre
+function isLetter(event) {
+    const char = String.fromCharCode(event.which);
+    return /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/.test(char);
+}
+
+// Función para permitir solo números en los campos de edad y monto
+function isNumber(event) {
+    const char = String.fromCharCode(event.which);
+    return /^[0-9]*$/.test(char);
+}
+
+// Función para validar la edad (debe ser 1-99)
+function validateAge(input) {
+    const value = input.value;
+    if (value.length > 2 || value < 1 || value > 99) {
+        input.setCustomValidity("La edad debe ser un número de 1 a 99 con un máximo de 2 dígitos.");
+    } else {
+        input.setCustomValidity("");
+    }
+}
+
+// Función para validar el monto a pagar (debe ser 1-999)
+function validatePayment(input) {
+    const value = input.value;
+    if (value.length > 3 || value < 1 || value > 999) {
+        input.setCustomValidity("El monto debe ser un número de 1 a 999 con un máximo de 3 dígitos.");
+    } else {
+        input.setCustomValidity("");
+    }
+}
+
+
+        let users = [];
+
+        function loadUsers() {
+            const userList = document.getElementById("user-list");
+            userList.innerHTML = "";
+            users.forEach((user, index) => {
+                const entryDate = new Date(user.entryDate);
+                const today = new Date();
+                const daysInGym = Math.floor((today - entryDate) / (1000 * 60 * 60 * 24));
+
+                userList.innerHTML += `
+                    <tr>
+                        <td><img src="${user.profilePicture}" alt="Foto de perfil" class="profile-pic" width="50"></td>
+                        <td>${user.name}</td>
+                        <td>${user.age}</td>
+                        <td>${user.email}</td>
+                        <td>${user.phone}</td>
+                        <td>${entryDate.toLocaleDateString()}</td>
+                        <td>${daysInGym} días</td>
+                        <td><button class="btn btn-danger" onclick="deleteUser(${index})">Eliminar</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function logout() {
+            window.location.href = 'Login.html';
+        }
+
+        document.getElementById("add-member-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const payment = document.getElementById("payment").value;
+            const profilePictureFile = document.getElementById("profile-picture").files[0];
+
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                const profilePicture = reader.result;
+
+                const newUser = {
+                    name,
+                    age,
+                    email,
+                    phone,
+                    payment,
+                    entryDate: new Date().toISOString(),
+                    profilePicture
+                };
+
+                users.push(newUser);
+                saveUsers();
+                loadUsers();
+                document.getElementById("add-member-form").reset();
+            };
+            reader.readAsDataURL(profilePictureFile);
+        });
+
+        function deleteUser(index) {
+            users.splice(index, 1);
+            saveUsers();
+            loadUsers();
+        }
+
+        function saveUsers() {
+            localStorage.setItem("gymUsers", JSON.stringify(users));
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const storedUsers = localStorage.getItem("gymUsers");
+            if (storedUsers) {
+                users = JSON.parse(storedUsers);
+            }
+            loadUsers();
+        });
+    </script>
+</body>
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imagenes/Imagen1.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body{
+    margin: 0;
+    padding: 0;
+    background-color: #809496;
+    color: #000;
+    font-family: sans-serif;
+    font-weight: bolder;
+}
+
+.content{
+    margin: auto;
+    margin-top: 10rcap;
+    width: 350px;
+    height: 430px;
+    border: 1px solid #040824;
+    border-radius: 25px;
+    padding: 20px;
+    box-sizing: border-box;
+    background: linear-gradient(-10deg, #3b6464,#95a6a7, #d8ebf4);
+    box-shadow: 1px 1px 15px #000;
+
+}
+
+.title{
+    text-align: center;
+}
+
+label{
+    line-height: 1.8;
+}
+
+.email,.password{
+    width: 98%;
+    padding: 7px;
+    border: 1px solid #000;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.links1,.links2{
+    display: inline-block;
+    text-decoration: none;
+    color: #0c1457;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.links2{
+    margin-left: 118px;
+}
+
+.check{
+    width: 5%;
+    margin-bottom: 30px;
+}
+
+.submit{
+    display: block;
+    width: 150px;
+    padding: 7px;
+    border-radius: 15px;
+    border: 1px solid #000;
+    font-size: 20px;
+    background-color: #ffff;
+    margin-left: 75px;
+    font-weight:bold ;
+    box-shadow: 1px 1px 6px #d8ebf4;
+}
+
+.submit:hover{
+    background-color: #000;
+    color: #ffff;
+    border-color: #ffff;
+    cursor: pointer;
+}
+    </style>
+ <title>Login Gym</title>
+</head>
+<body>
+    <div class="content">
+        <form class="form" onsubmit="login(event)">
+            <h1 class="title">Gimnasio🔱</h1>
+            <label class="label">Usuario 👤
+                <input id="email" class="email" type="email" placeholder="Usuario@gmail.com" required>
+            </label>
+            <label class="label">Clave🔑
+                <input id="password" class="password" type="password" placeholder="*******" required>
+            </label>
+            <input class="submit" type="submit" value="Ingresar🆗">
+        </form>
+    </div>
+
+    <script>
+        // Datos de ejemplo para simular un usuario registrado
+        localStorage.setItem('gym1@gmail.com', '112100'); // Guardar usuario y contraseña en localStorage
+
+        function login(event) {
+            event.preventDefault(); // Evita que se envíe el formulario de forma tradicional
+
+            // Obtiene los valores de usuario y contraseña
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Verificar si el usuario y contraseña coinciden con los datos guardados
+            const storedPassword = localStorage.getItem(email); // Obtiene la contraseña asociada al correo electrónico
+
+            if (storedPassword === password) {
+                alert('Inicio de sesión exitoso. ¡Bienvenido al gimnasio!');
+                window.location.href = 'GymSystem.html'; // Redirecciona a la página principal
+            } else {
+                alert('Usuario o contraseña incorrectos.');
+            }
+
+            // Limpia los campos después del intento de login
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        }
+    </script>
+</body>
+
+
+</html>
